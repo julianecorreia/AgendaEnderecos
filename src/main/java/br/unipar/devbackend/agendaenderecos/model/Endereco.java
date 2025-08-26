@@ -1,21 +1,15 @@
 package br.unipar.devbackend.agendaenderecos.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Entity
 public class Endereco {
-
-    //Nome;
-    //email;
-    //Data de Nascimento;
-    //Lista de Endereços;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +20,8 @@ public class Endereco {
     private String bairro;
     private String localidade;
     private String uf;
+
+    @ManyToOne
+    private Cliente cliente;
 
 }
