@@ -1,9 +1,16 @@
 package br.unipar.devbackend.agendaenderecos.model;
 
 import jakarta.persistence.*;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.io.StringReader;
 
 @Getter
 @Setter
@@ -23,5 +30,6 @@ public class Endereco {
 
     @ManyToOne
     private Cliente cliente;
+
 
 }

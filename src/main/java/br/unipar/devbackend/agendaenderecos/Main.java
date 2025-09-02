@@ -1,5 +1,6 @@
 package br.unipar.devbackend.agendaenderecos;
 
+import br.unipar.devbackend.agendaenderecos.dao.EnderecoDAO;
 import br.unipar.devbackend.agendaenderecos.model.Cliente;
 import br.unipar.devbackend.agendaenderecos.model.Endereco;
 import br.unipar.devbackend.agendaenderecos.utils.EntityManagerUtil;
@@ -14,15 +15,84 @@ public class Main {
     public static void main(String[] args) {
         EntityManagerUtil.getEmf();
 
-        EntityManager em = EntityManagerUtil.getEm();
-        List<Cliente> clientes = new ArrayList<>();
-        clientes = em.createQuery("SELECT t FROM Cliente t", Cliente.class).getResultList();
+        EnderecoDAO dao = new EnderecoDAO(EntityManagerUtil.getEm());
+        List<Endereco> enderecos = dao.findByCep("85915-230");
 
-        for(Cliente cli : clientes) {
-            System.out.println(cli.getId() + " - " + cli.getNome());
+        for(Endereco end : enderecos) {
+            System.out.println("CEP: " + end.getCep() +
+                    ", Logradouro: " + end.getLogradouro() +
+                    ", Bairro: " + end.getBairro() +
+                    ", Localidade: " + end.getLocalidade() +
+                    "/" + end.getUf());
         }
+
+        EntityManagerUtil.closeEmf();
     }
 
+//    public static void main(String[] args) {
+//        EntityManagerUtil.getEmf();
+//
+//        EntityManager em = EntityManagerUtil.getEm(); //entity manager (responsável pela requisição)
+//        Cliente cliente = em.find(Cliente.class, 1); //encontra cliente id=1 find = select where id...
+//
+//        try {
+//            em.getTransaction().begin(); //abrindo transação
+//            em.remove(cliente); // remove = delete
+//            em.getTransaction().commit(); // confirma que é isso mesmo
+//        } catch (Exception ex) {
+//            em.getTransaction().rollback();
+//            System.out.println("Algo de errado não deu certo: " + ex.getMessage());
+//        } finally {
+//            if(em.isOpen()) {
+//                em.close();
+//                System.out.println("EntityManager fechado.");
+//            }
+//            System.out.println("Cliente removido: " + cliente.getNome());
+//        }
+//
+//        EntityManagerUtil.closeEmf();
+//    }
+
+//    public static void main(String[] args) {
+//        EntityManagerUtil.getEmf(); //factory
+//
+//        EntityManager em = EntityManagerUtil.getEm(); //entity manager (responsável pela requisção)
+//        Cliente cliente = em.find(Cliente.class, 1); //encontra cliente id=1 find = select
+//
+//        System.out.println("Email anterior do " + cliente.getNome() +": " + cliente.getEmail());
+//
+//        cliente.setEmail("zezejoao@unipar.br"); // edita o email
+//
+//        try {
+//            em.getTransaction().begin(); //bloco de transacao
+//            em.merge(cliente); // merge = update != persist = insert
+//            em.getTransaction().commit();
+//        } catch (Exception ex) {
+//            em.getTransaction().rollback();
+//            System.out.println("Algo de errado não deu certo: " + ex.getMessage());
+//        } finally {
+//            if(em.isOpen()) {
+//                em.close();
+//                System.out.println("EntityManager fechado.");
+//            }
+//            System.out.println("Email novo do " + cliente.getNome() +": " + cliente.getEmail());
+//        }
+//
+//        EntityManagerUtil.closeEmf();
+//    }
+
+//    public static void main(String[] args) {
+//        EntityManagerUtil.getEmf();
+//
+//        EntityManager em = EntityManagerUtil.getEm();
+//        List<Cliente> clientes = new ArrayList<>();
+//        clientes = em.createQuery("SELECT t FROM Cliente t", Cliente.class).getResultList();
+//
+//        for(Cliente cli : clientes) {
+//            System.out.println(cli.getId() + " - " + cli.getNome());
+//        }
+//    }
+//
 //    public static void main(String[] args) {
 //        EntityManagerUtil.getEmf();
 //
@@ -41,7 +111,7 @@ public class Main {
 //        }
 //
 //    }
-
+//
 //    public static void main(String[] args) {
 //        EntityManagerUtil.getEmf();
 //
@@ -77,9 +147,9 @@ public class Main {
 //        }
 //
 //    }
-
-    //primeiro contato com entitymanager persistimos um endereço
-
+//
+//    //primeiro contato com entitymanager persistimos um endereço
+//
 //    public static void main(String[] args) {
 //        EntityManagerUtil.getEmf();
 //
