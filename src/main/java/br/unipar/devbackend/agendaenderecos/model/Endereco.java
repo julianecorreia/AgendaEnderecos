@@ -12,10 +12,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.StringReader;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @XmlRootElement(name = "xmlcep") //raiz que vem da api
 @XmlAccessorType(XmlAccessType.FIELD) //os campos são os atributos
@@ -31,6 +31,8 @@ public class Endereco {
     private String localidade;
     private String uf;
 
+    private LocalDateTime dataCadastro;
+
     @ManyToOne
     private Cliente cliente;
 
@@ -40,6 +42,19 @@ public class Endereco {
         Unmarshaller unmarshaller = context.createUnmarshaller(); //objeto que faz a conversão
         StringReader reader = new StringReader(xml); //lê a string
         return (Endereco) unmarshaller.unmarshal(reader); //converte a string em objeto e retorna
+    }
+
+    @Override
+    public String toString() {
+        return "Endereco{" +
+                "id=" + id +
+                ", cep='" + cep + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", localidade='" + localidade + '\'' +
+                ", uf='" + uf + '\'' +
+                '}';
     }
 
 }
